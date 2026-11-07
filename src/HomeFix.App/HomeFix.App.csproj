@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The console front end of the workshop: menus, typed input and printed alerts. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>HomeFix.App</RootNamespace>
+    <AssemblyName>HomeFix</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HomeFix.Core\HomeFix.Core.csproj" />
+  </ItemGroup>
+
+  <!-- The tests drive the console classes with text readers and writers. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="HomeFix.Tests" />
+  </ItemGroup>
+
+</Project>

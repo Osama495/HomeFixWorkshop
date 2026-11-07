@@ -1,0 +1,15 @@
+# Git stores text with LF; each file is checked out with the ending .editorconfig names.
+* text=auto eol=lf
+
+# Visual Studio rewrites solution files with CRLF, so keep them that way
+*.sln    text eol=crlf
+
+# Show C# changes method by method in diffs
+*.cs     text diff=csharp
+
+# Never touch these
+*.png    binary
+*.jpg    binary
+*.pdf    binary
+*.docx   binary
+*.zip    binary

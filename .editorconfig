@@ -1,0 +1,96 @@
+root = true
+
+# ----------------------------------------------------------------------------
+# Every file: UTF-8, LF line endings, spaces.
+# ----------------------------------------------------------------------------
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{csproj,props,targets,json,xml,yml,yaml}]
+indent_size = 2
+
+[*.sln]
+end_of_line = crlf
+indent_style = tab
+
+[*.md]
+trim_trailing_whitespace = false
+
+# ----------------------------------------------------------------------------
+# C#: the conventions the HomeFix code is written in. Visual Studio shows a
+# hint (three dots) wherever a line does not follow them.
+# ----------------------------------------------------------------------------
+[*.cs]
+
+# Namespaces written as blocks, using directives at the top of the file, System first
+csharp_style_namespace_declarations = block_scoped:suggestion
+csharp_using_directive_placement = outside_namespace:suggestion
+dotnet_sort_system_directives_first = true
+
+# Braces on their own line, and always present, even around one statement
+csharp_new_line_before_open_brace = all
+csharp_prefer_braces = true:suggestion
+
+# Every instance member is reached through "this.", so it never reads like a local or a static
+dotnet_style_qualification_for_field = true:suggestion
+dotnet_style_qualification_for_property = true:suggestion
+dotnet_style_qualification_for_method = true:suggestion
+dotnet_style_qualification_for_event = true:suggestion
+
+# "var" only where the type is written on the same line
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_elsewhere = false:suggestion
+csharp_style_implicit_object_creation_when_type_is_apparent = true:suggestion
+
+# Arrow bodies for properties; methods may use one when it fits on a line
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+csharp_style_expression_bodied_methods = when_on_single_line:silent
+csharp_style_expression_bodied_constructors = false:suggestion
+
+# Every member says its access level; a field set only in the constructor is readonly
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
+dotnet_style_readonly_field = true:suggestion
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+
+# ---- names ------------------------------------------------------------------
+# Types, methods, properties, events, constants: PascalCase
+dotnet_naming_symbols.type_and_member.applicable_kinds = class, struct, interface, enum, delegate, method, property, event
+dotnet_naming_style.pascal.capitalization = pascal_case
+dotnet_naming_rule.type_and_member_pascal.symbols = type_and_member
+dotnet_naming_rule.type_and_member_pascal.style = pascal
+dotnet_naming_rule.type_and_member_pascal.severity = suggestion
+
+dotnet_naming_symbols.constant_field.applicable_kinds = field
+dotnet_naming_symbols.constant_field.required_modifiers = const
+dotnet_naming_rule.constant_pascal.symbols = constant_field
+dotnet_naming_rule.constant_pascal.style = pascal
+dotnet_naming_rule.constant_pascal.severity = suggestion
+
+# Interfaces start with I
+dotnet_naming_symbols.interface_type.applicable_kinds = interface
+dotnet_naming_style.i_prefix.required_prefix = I
+dotnet_naming_style.i_prefix.capitalization = pascal_case
+dotnet_naming_rule.interface_i_prefix.symbols = interface_type
+dotnet_naming_rule.interface_i_prefix.style = i_prefix
+dotnet_naming_rule.interface_i_prefix.severity = suggestion
+
+# Private fields, static or not: plain camelCase, no prefix (they are read as this.name)
+dotnet_naming_symbols.private_field.applicable_kinds = field
+dotnet_naming_symbols.private_field.applicable_accessibilities = private
+dotnet_naming_style.camel.capitalization = camel_case
+dotnet_naming_rule.private_field_camel.symbols = private_field
+dotnet_naming_rule.private_field_camel.style = camel
+dotnet_naming_rule.private_field_camel.severity = suggestion
+
+# Parameters and locals: camelCase
+dotnet_naming_symbols.parameter_and_local.applicable_kinds = parameter, local
+dotnet_naming_rule.parameter_and_local_camel.symbols = parameter_and_local
+dotnet_naming_rule.parameter_and_local_camel.style = camel
+dotnet_naming_rule.parameter_and_local_camel.severity = suggestion
