@@ -184,5 +184,26 @@ namespace HomeFix.Core.Workshop
                 device.StageChanged -= this.OnDeviceStageChanged;
             }
         }
-    }
+        /// <summary>
+       /// Delivers a repaired device back to its owner and removes it from the active workshop list.
+       /// </summary>
+     public void DeliverDevice(string serialNo)
+        {
+          HomeDevice device = this.Find(serialNo) ?? throw new KeyNotFoundException($"No device {serialNo} in this workshop.");
+
+         if (device.Stage != RepairStage.Returned)
+            {
+                 throw new InvalidOperationException($"Device {serialNo} cannot be delivered. Current stage is {device.Stage}, it must be {RepairStage.Returned}.");
+            }
+
+          // Unsubscribe from the event to prevent memory leaks
+           device.StageChanged -= this.OnDeviceStageChanged;
+    
+          // Remove from the active list
+           this.devices.Remove(device);
+    
+           // Clean up late reports
+          this.reportedLate.Remove(serialNo);
+       }
+   }
 }

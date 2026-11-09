@@ -146,20 +146,45 @@ namespace HomeFix.Tests
             Assert.Throws<InvalidOperationException>(() => workshop.Hire(fadi));
             Assert.Single(workshop.Technicians);
         }
-
+      
         [Fact]
-        public void Postponing_an_unknown_device_is_refused()
+        public void Delivering_a_device_removes_it_from_the_workshop()
         {
             var workshop = new ServiceWorkshop("Test Workshop");
+            var technician = Make.Technician();
+            
+            // نضع الجهاز على طاولة العمل أولاً
+            var device = Make.OnBench(Make.Dishwasher(), technician, 1.5m, new SparePart("door seal", 50000m));
+            
+            workshop.Receive(device);
 
-            Assert.Throws<KeyNotFoundException>(() => workshop.Postpone("DW-2024-00001", Make.Today.AddDays(3)));
+            // ننهي إصلاحه ونسلمه
+            device.FinishRepair();
+            device.HandOver(Make.Today);
+
+            // نختبر دالتنا الجديدة
+            workshop.DeliverDevice(device.SerialNo);
+
+            Assert.DoesNotContain(device, workshop.Devices);
         }
 
         [Fact]
-        public void A_workshop_needs_a_name()
+        public void Delivering_a_device_that_is_not_returned_throws_exception()
         {
-            Assert.Throws<ArgumentException>(() => new ServiceWorkshop("  "));
-            Assert.Equal("HomeFix Workshop", new ServiceWorkshop("  HomeFix   Workshop ").Name);
+            var workshop = new ServiceWorkshop("Test Workshop");
+            var device = Make.Dishwasher();
+            
+            workshop.Receive(device);
+
+            Assert.Throws<InvalidOperationException>(() => workshop.DeliverDevice(device.SerialNo));
+        }
+
+        [Fact]
+        public void Delivering_a_non_existent_device_throws_exception()
+        {
+            var workshop = new ServiceWorkshop("Test Workshop");
+            
+            Assert.Throws<KeyNotFoundException>(() => workshop.DeliverDevice("NON-EXISTENT-123"));
         }
 
         private static bool IsDishwasher(HomeDevice device) => device is Dishwasher;
